@@ -4,6 +4,8 @@ import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
 import { Statistics } from './Statistics/Statistics';
 import { Notification } from './Notification/Notification';
 
+const options = ['good', 'neutral', 'bad'];
+
 export const App = () => {
   const [feedback, setFeedback] = useState({
     good: 0,
@@ -11,11 +13,12 @@ export const App = () => {
     bad: 0,
   });
 
-  const options = ['good', 'neutral', 'bad'];
-
-  const onLeaveFeedback = e => {
-    setFeedback(prevState => [...prevState, ...feedback]);
+  const onLeaveFeedback = options => {
+    setFeedback(prevState => ({
+      [options]: prevState[options] + 1,
+    }));
   };
+
   const countTotalFeedback = () =>
     Object.values(feedback).reduce((acc, el) => acc + el, 0);
 
