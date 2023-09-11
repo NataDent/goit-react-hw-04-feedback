@@ -4,8 +4,6 @@ import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
 import { Statistics } from './Statistics/Statistics';
 import { Notification } from './Notification/Notification';
 
-const options = ['good', 'neutral', 'bad'];
-
 export const App = () => {
   const [feedback, setFeedback] = useState({
     good: 0,
@@ -13,8 +11,13 @@ export const App = () => {
     bad: 0,
   });
 
+  const options = Object.keys(feedback);
+
+  console.log(Object.keys(feedback));
+
   const onLeaveFeedback = options => {
     setFeedback(prevState => ({
+      ...prevState,
       [options]: prevState[options] + 1,
     }));
   };
@@ -32,12 +35,12 @@ export const App = () => {
         <FeedbackOptions options={options} onLeaveFeedback={onLeaveFeedback} />
       </Section>
       <Section title="Statistics">
-        {countTotalFeedback > 0 ? (
+        {countTotalFeedback() > 0 ? (
           <Statistics
             good={feedback.good}
             neutral={feedback.neutral}
             bad={feedback.bad}
-            total={countTotalFeedback}
+            total={countTotalFeedback()}
             positivePercentage={countPositivePercentage}
           />
         ) : (
